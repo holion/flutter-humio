@@ -1,6 +1,6 @@
 name: humio
 description: Analytics and error logging from your Flutter app to Humio.
-version: 0.0.1
+version: 0.0.2
 homepage: https://holion.dk
 
 environment:
