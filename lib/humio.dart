@@ -1,3 +1,6 @@
+/// Analytics and error logging from your Flutter app to Humio.
+///
+/// If you already know Humio you know you'll need this library. If you don't know Humio already you should create a free account and start using this library :-)
 library humio;
 
 import 'dart:convert';
@@ -7,29 +10,48 @@ import 'package:dio/dio.dart';
 class Humio {
   String _ingestToken;
 
+  /// The URL logs are sent to.
+  ///
+  /// You should probably never touch the value of this property.
   String ingestUrl = 'https://cloud.humio.com/api/v1/ingest/humio-structured';
+
+  /// Should the `message` property of all events be the `@rawmessage` in Humio?
   bool setRawMessage;
 
+  /// Creates a new Humio logging instance
   Humio(
     this._ingestToken, {
     this.setRawMessage = false,
   });
 
-  Future<bool> log(String severity, String message,
-      {Object error,
-      StackTrace stackTrace,
-      Map<String, dynamic> fields,
-      Map<String, String> tags}) async {
+  /// Log a message to Humio.
+  ///
+  /// The [severity] is simply some value which makes sense to you. The [message] is the important part of the log statement.
+  /// If you want to log an error the [error] and [stackTrace] should be given. You can provide additional values using the [fields].
+  ///
+  /// Humio segment data into indexes called `data sources`. An index will be created for each unique pair of [tags].
+  ///
+  /// You can call this method directly - but we recommend you call it using the [HumioExtensions].
+  Future<bool> log(
+    String severity,
+    String message, {
+    Object error,
+    StackTrace stackTrace,
+    Map<String, dynamic> fields,
+    Map<String, String> tags,
+  }) async {
     if (_ingestToken?.isEmpty ?? true)
       throw 'Humio ingest token is not defined';
     if (ingestUrl?.isEmpty ?? true) throw 'Humio ingest URL is not defined';
 
+    // If no tags are specified we will create a default one
     if (tags == null)
       tags = {
         'environment': 'dev',
       };
     else if (tags['environment'] == null) tags['environment'] = 'dev';
 
+    // If we are logging this while debugging we should mark the log statement as such
     assert(() {
       tags['debug'] = 'true';
 
