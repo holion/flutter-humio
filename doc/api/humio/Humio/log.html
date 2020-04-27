@@ -86,7 +86,7 @@
     <section class="multi-line-signature">
       <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>&gt;</span></span>
             <span class="name ">log</span>
-(<wbr><ol class="parameter-list"><li><span class="parameter" id="log-param-severity"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">severity</span>, </span></li>
+(<wbr><ol class="parameter-list"><li><span class="parameter" id="log-param-level"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">level</span>, </span></li>
 <li><span class="parameter" id="log-param-message"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">message</span>, </span></li>
 <li><span class="parameter" id="log-param-error">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">error</span>, </span></li>
 <li><span class="parameter" id="log-param-stackTrace"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/StackTrace-class.html">StackTrace</a></span> <span class="parameter-name">stackTrace</span>, </span></li>
@@ -97,7 +97,7 @@
     </section>
     <section class="desc markdown">
       <p>Log a message to Humio.</p>
-<p>The <code>severity</code> is simply some value which makes sense to you. The <code>message</code> is the important part of the log statement.
+<p>The <code>level</code> is simply some value which makes sense to you. The <code>message</code> is the important part of the log statement.
 If you want to log an error the <code>error</code> and <code>stackTrace</code> should be given. You can provide additional values using the <code>fields</code>.</p>
 <p>Humio segment data into indexes called <code>data sources</code>. An index will be created for each unique pair of <code>tags</code>.</p>
 <p>You can call this method directly - but we recommend you call it using the <a href="../../humio/HumioExtensions.html">HumioExtensions</a>.</p>
@@ -106,7 +106,7 @@ If you want to log an error the <code>error</code> and <code>stackTrace</code> s
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span></h2>
       <pre class="language-dart"><code class="language-dart">Future&lt;bool&gt; log(
-  String severity,
+  String level,
   String message, {
   Object error,
   StackTrace stackTrace,
@@ -120,9 +120,9 @@ If you want to log an error the <code>error</code> and <code>stackTrace</code> s
   &#47;&#47; If no tags are specified we will create a default one
   if (tags == null)
     tags = {
-      &#39;environment&#39;: &#39;dev&#39;,
+      &#39;level&#39;: level,
     };
-  else if (tags[&#39;environment&#39;] == null) tags[&#39;environment&#39;] = &#39;dev&#39;;
+  else if (tags[&#39;level&#39;] == null) tags[&#39;level&#39;] = &#39;information&#39;;
 
   &#47;&#47; If we are logging this while debugging we should mark the log statement as such
   assert(() {

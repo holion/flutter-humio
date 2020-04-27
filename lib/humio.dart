@@ -26,14 +26,14 @@ class Humio {
 
   /// Log a message to Humio.
   ///
-  /// The [severity] is simply some value which makes sense to you. The [message] is the important part of the log statement.
+  /// The [level] is simply some value which makes sense to you. The [message] is the important part of the log statement.
   /// If you want to log an error the [error] and [stackTrace] should be given. You can provide additional values using the [fields].
   ///
   /// Humio segment data into indexes called `data sources`. An index will be created for each unique pair of [tags].
   ///
   /// You can call this method directly - but we recommend you call it using the [HumioExtensions].
   Future<bool> log(
-    String severity,
+    String level,
     String message, {
     Object error,
     StackTrace stackTrace,
@@ -47,9 +47,9 @@ class Humio {
     // If no tags are specified we will create a default one
     if (tags == null)
       tags = {
-        'environment': 'dev',
+        'level': level,
       };
-    else if (tags['environment'] == null) tags['environment'] = 'dev';
+    else if (tags['level'] == null) tags['level'] = 'information';
 
     // If we are logging this while debugging we should mark the log statement as such
     assert(() {
@@ -109,19 +109,19 @@ extension HumioExtensions on Humio {
       await this.log('verbose', message, fields: fields, tags: tags);
 
   /// Debug is used for internal system events that are not necessarily observable from the outside, but useful when determining how something happened.
-  void debug(String message,
-          {Map<String, dynamic> fields, Map<String, String> tags}) =>
-      this.log('debug', message, fields: fields, tags: tags);
+  Future debug(String message,
+          {Map<String, dynamic> fields, Map<String, String> tags}) async =>
+      await this.log('debug', message, fields: fields, tags: tags);
 
   /// Information events describe things happening in the system that correspond to its responsibilities and functions. Generally these are the observable actions the system can perform.
-  void information(String message,
-          {Map<String, dynamic> fields, Map<String, String> tags}) =>
-      this.log('information', message, fields: fields, tags: tags);
+  Future information(String message,
+          {Map<String, dynamic> fields, Map<String, String> tags}) async =>
+      await this.log('information', message, fields: fields, tags: tags);
 
   /// When service is degraded, endangered, or may be behaving outside of its expected parameters, Warning level events are used.
-  void warning(String message,
-          {Map<String, dynamic> fields, Map<String, String> tags}) =>
-      this.log('warning', message, fields: fields, tags: tags);
+  Future warning(String message,
+          {Map<String, dynamic> fields, Map<String, String> tags}) async =>
+      await this.log('warning', message, fields: fields, tags: tags);
 
   /// When functionality is unavailable or expectations broken, an Error event is used.
   Future error(String message, Object error, StackTrace stackTrace,
@@ -130,7 +130,7 @@ extension HumioExtensions on Humio {
           error: error, stackTrace: stackTrace, fields: fields, tags: tags);
 
   /// The most critical level, Fatal events demand immediate attention.
-  void fatal(String message,
-          {Map<String, dynamic> fields, Map<String, String> tags}) =>
-      this.log('fatal', message, fields: fields, tags: tags);
+  Future fatal(String message,
+          {Map<String, dynamic> fields, Map<String, String> tags}) async =>
+      await this.log('fatal', message, fields: fields, tags: tags);
 }
