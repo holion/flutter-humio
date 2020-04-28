@@ -38,4 +38,12 @@ try {
 }
 ```
 
-for more examples look in `example/main.dart`.
+for more examples look in `example/humio_basic_example.dart`.
+
+## Enrichers
+
+If you have certain fields you always want to send to Humio, you should consider using Enrichers.
+
+Enrichers can be added dynamically and when they have been added they will annotate every log statement with the fields they provide.
+
+View the example in `example/humio_with_enrichers.dart` for a simple example.

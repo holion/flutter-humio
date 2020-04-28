@@ -8,7 +8,7 @@ String _token;
 String get token {
   if (_token != null) return _token;
 
-  var filename = 'test/humio-ingest-token';
+  var filename = '.humio-ingest-token';
   
   var file = File(filename);
   if (!file.existsSync())

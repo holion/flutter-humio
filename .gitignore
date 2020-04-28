@@ -2,4 +2,4 @@
 build/
 
 .packages
-test/humio-ingest-token
+.humio-ingest-token
