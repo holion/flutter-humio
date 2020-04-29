@@ -20,7 +20,7 @@ class HumioStub implements Humio {
     Map<String, dynamic> fields,
     Map<String, String> tags,
   }) async {
-    lastLogStatement = LogStatement(level, message, fields);
+    lastLogStatement = LogStatement(level, message, fields, tags);
 
     return true;
   }

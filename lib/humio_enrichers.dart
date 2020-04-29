@@ -1,4 +1,5 @@
 import 'package:humio/enricher.dart';
+import 'package:humio/tag_enricher.dart';
 
 import 'humio.dart';
 
@@ -44,10 +45,16 @@ class HumioEnrichers implements Humio {
         tags: tags,
       );
 
-      fields = {
-        ...fields ?? {},
-        ...enricherFields,
-      };
+      if (enricher is TagEnricher)
+        tags = {
+          ...tags ?? {},
+          ...enricherFields,
+        };
+      else
+        fields = {
+          ...fields ?? {},
+          ...enricherFields,
+        };
     }
 
     return await base.log(

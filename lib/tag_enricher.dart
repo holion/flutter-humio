@@ -1,6 +1,8 @@
-/// An Enricher can add fields to every log statement.
-class Enricher {
-  Future<Map<String, dynamic>> enrich(
+import 'enricher.dart';
+
+/// A TagEnricher can add tags to every log statement.
+class TagEnricher implements Enricher {
+  Future<Map<String, String>> enrich(
     String level,
     String message, {
     Object error,
