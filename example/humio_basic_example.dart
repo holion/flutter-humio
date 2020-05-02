@@ -4,7 +4,7 @@ import 'config.dart';
 
 class HumioBasicExample {
   Future run() async {
-    var humio = Humio(Config.humioIngestToken);
+    var humio = Humio.defaultImplementation(Config.humioIngestToken);
 
     await humio.log('information', 'The example program has been started');
 

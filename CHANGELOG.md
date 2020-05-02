@@ -1,3 +1,7 @@
+## [0.0.6] - 2020-05-02
+
+* Dispatcher consent introduced. Makes the acutal HTTP request to send data to Humio.
+
 ## [0.0.5] - TagEnrichers added
 
 ## [0.0.4] - Enrichers added

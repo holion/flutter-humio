@@ -8,7 +8,7 @@ To use this plugin, add `humio` as a [dependency in your pubspec.yaml file](http
 
 When humio is added to your project you can initialize it using your Humio ingest token:
 ```
-var humio = Humio('your-humio-ingest-token');
+var humio = Humio.defaultImplementation('your-humio-ingest-token');
 ```
 
 You are now ready to log to Humio:
@@ -22,7 +22,7 @@ await humio.information('Logging using the information level');
 A longer example:
 
 ```
-var humio = Humio('your-humio-ingest-token');
+var humio = Humio.defaultImplementation('your-humio-ingest-token');
 
 await humio.information('The example app uses extension methods to avoid magic strings for the level');
 

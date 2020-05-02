@@ -14,14 +14,14 @@ class HumioEnrichers implements Humio {
   HumioEnrichers.defaultImplementation(
     String ingestToken, {
     bool setRawMessage = false,
-  }) : this(Humio(ingestToken, setRawMessage: setRawMessage));
+  }) : this(Humio.defaultImplementation(
+          ingestToken,
+          setRawMessage: setRawMessage,
+        ));
 
   void addEnricher(Enricher enricher) {
     _enrichers.add(enricher);
   }
-
-  @override
-  String ingestUrl;
 
   @override
   bool setRawMessage;

@@ -5,24 +5,26 @@ library humio;
 
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
+import 'package:humio/dispatcher.dart';
+import 'package:humio/humio_dispatcher.dart';
 
 class Humio {
-  String _ingestToken;
-
-  /// The URL logs are sent to.
-  ///
-  /// You should probably never touch the value of this property.
-  String ingestUrl = 'https://cloud.humio.com/api/v1/ingest/humio-structured';
+  Dispatcher _dispatcher;
 
   /// Should the `message` property of all events be the `@rawmessage` in Humio?
   bool setRawMessage;
 
   /// Creates a new Humio logging instance
   Humio(
-    this._ingestToken, {
+    this._dispatcher, {
     this.setRawMessage = false,
   });
+
+  /// Creates a new Humio logging instance using the [HumioDispatcher].
+  Humio.defaultImplementation(
+    String ingestToken, {
+    setRawMessage = false,
+  }) : this(HumioDispatcher(ingestToken), setRawMessage: setRawMessage);
 
   /// Log a message to Humio.
   ///
@@ -40,10 +42,6 @@ class Humio {
     Map<String, dynamic> fields,
     Map<String, String> tags,
   }) async {
-    if (_ingestToken?.isEmpty ?? true)
-      throw 'Humio ingest token is not defined';
-    if (ingestUrl?.isEmpty ?? true) throw 'Humio ingest URL is not defined';
-
     // If no tags are specified we will create a default one
     if (tags == null)
       tags = {
@@ -80,25 +78,7 @@ class Humio {
 
     var requestJson = jsonEncode([body]);
 
-    var dio = Dio();
-
-    Response<dynamic> response;
-    try {
-      response = await dio.post(
-        ingestUrl,
-        data: requestJson,
-        options: Options(
-          contentType: 'application/json',
-          headers: {'Authorization': 'Bearer $_ingestToken'},
-        ),
-      );
-    } on DioError catch (e) {
-      print('Humio log error: ${e.message}');
-
-      return false;
-    }
-
-    return response.statusCode == 200;
+    return await _dispatcher.dispatch(requestJson);
   }
 }
 

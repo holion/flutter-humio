@@ -6,9 +6,6 @@ class HumioStub implements Humio {
   LogStatement lastLogStatement;
 
   @override
-  String ingestUrl;
-
-  @override
   bool setRawMessage;
 
   @override
