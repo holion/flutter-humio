@@ -1,6 +1,8 @@
 ## [0.0.6] - 2020-05-02
 
 * Dispatcher consent introduced. Makes the acutal HTTP request to send data to Humio.
+* Bugs fixed:
+  * Level set correctly when tags are provided.
 
 ## [0.0.5] - TagEnrichers added
 

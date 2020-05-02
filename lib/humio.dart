@@ -47,7 +47,7 @@ class Humio {
       tags = {
         'level': level,
       };
-    else if (tags['level'] == null) tags['level'] = 'information';
+    else if (tags['level'] == null) tags['level'] = level;
 
     // If we are logging this while debugging we should mark the log statement as such
     assert(() {

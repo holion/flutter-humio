@@ -112,4 +112,31 @@ void main() {
       tags: {'environment': 'prod', 'sensitive': 'true'},
     );
   });
+
+  test('level-tag should be set to the provided level', () async {
+    var dispatcherStub = DispatcherStub();
+
+    final sut = Humio(dispatcherStub);
+
+    await sut.verbose('Testing the level', tags: {'tag': 'tagvalue'});
+
+    var decodedJson = jsonDecode(dispatcherStub.lastJson);
+    expect(decodedJson as List, isNotNull);
+    expect((decodedJson as List).length, 1);
+    expect(decodedJson[0], isNotNull);
+    expect(decodedJson[0]['tags'], isNotNull);
+    expect(decodedJson[0]['tags']['level'], isNotNull);
+    expect(decodedJson[0]['tags']['level'], 'verbose');
+  });
+}
+
+class DispatcherStub implements Dispatcher {
+  String lastJson;
+
+  @override
+  Future<bool> dispatch(String json) async {
+    lastJson = json;
+
+    return true;
+  }
 }
