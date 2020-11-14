@@ -1,3 +1,7 @@
+## [0.1.0] - 2020-11-14
+
+* Fields moved to the root in Humio
+
 ## [0.0.6] - 2020-05-02
 
 * Dispatcher consent introduced. Makes the acutal HTTP request to send data to Humio.
