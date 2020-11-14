@@ -1,0 +1,26 @@
+trigger:
+  - master
+
+variables:
+  flutterChannel: stable
+  flutterVersion: latest
+
+pool:
+  name: default
+
+jobs:
+  - job: BuildAndPublish
+    displayName: Build and publish package
+    steps:
+      - task: FlutterInstall@0
+        displayName: Installing flutter
+        inputs:
+          channel: $(flutterChannel)
+          version: $(flutterVersion)
+
+      - script: $(FlutterToolPath)/flutter doctor -v
+        displayName: Flutter Doctor
+
+      - script: $(FlutterToolPath)/flutter pub publish -f
+        displayName: Publishing package
+        workingDirectory: .
