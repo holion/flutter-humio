@@ -60,15 +60,13 @@ class Humio {
 
     if (!setRawMessage) fields['message'] = message;
 
-    var attributes = Map<String, dynamic>();
-    if (error != null) attributes['error'] = error;
-    if (stackTrace != null) attributes['stacktrace'] = stackTrace.toString();
-    if (fields != null) attributes['fields'] = fields;
+    if (error != null) fields['error'] = error;
+    if (stackTrace != null) fields['stacktrace'] = stackTrace.toString();
 
     dynamic event = {
       'timestamp': DateTime.now().toUtc().toIso8601String(),
       if (setRawMessage) 'rawstring': message,
-      'attributes': attributes
+      'attributes': fields
     };
 
     final body = {
