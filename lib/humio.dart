@@ -12,7 +12,7 @@ class Humio {
   Dispatcher _dispatcher;
 
   /// Should the `message` property of all events be the `@rawmessage` in Humio?
-  bool setRawMessage;
+  bool? setRawMessage;
 
   /// Creates a new Humio logging instance
   Humio(
@@ -37,10 +37,10 @@ class Humio {
   Future<bool> log(
     String level,
     String message, {
-    Object error,
-    StackTrace stackTrace,
-    Map<String, dynamic> fields,
-    Map<String, String> tags,
+    Object? error,
+    StackTrace? stackTrace,
+    Map<String, dynamic>? fields,
+    Map<String, String>? tags,
   }) async {
     // If no tags are specified we will create a default one
     if (tags == null)
@@ -51,21 +51,21 @@ class Humio {
 
     // If we are logging this while debugging we should mark the log statement as such
     assert(() {
-      tags['debug'] = 'true';
+      tags!['debug'] = 'true';
 
       return true;
     }());
 
     if (fields == null) fields = {};
 
-    if (!setRawMessage) fields['message'] = message;
+    if (setRawMessage!) fields['message'] = message;
 
     if (error != null) fields['error'] = error;
     if (stackTrace != null) fields['stacktrace'] = stackTrace.toString();
 
     dynamic event = {
       'timestamp': DateTime.now().toUtc().toIso8601String(),
-      if (setRawMessage) 'rawstring': message,
+      if (setRawMessage!) 'rawstring': message,
       'attributes': fields
     };
 
@@ -83,32 +83,32 @@ class Humio {
 extension HumioExtensions on Humio {
   /// Verbose is the noisiest level, rarely (if ever) enabled for a production app.
   Future verbose(String message,
-          {Map<String, dynamic> fields, Map<String, String> tags}) async =>
+          {Map<String, dynamic>? fields, Map<String, String>? tags}) async =>
       await this.log('verbose', message, fields: fields, tags: tags);
 
   /// Debug is used for internal system events that are not necessarily observable from the outside, but useful when determining how something happened.
   Future debug(String message,
-          {Map<String, dynamic> fields, Map<String, String> tags}) async =>
+          {Map<String, dynamic>? fields, Map<String, String>? tags}) async =>
       await this.log('debug', message, fields: fields, tags: tags);
 
   /// Information events describe things happening in the system that correspond to its responsibilities and functions. Generally these are the observable actions the system can perform.
   Future information(String message,
-          {Map<String, dynamic> fields, Map<String, String> tags}) async =>
+          {Map<String, dynamic>? fields, Map<String, String>? tags}) async =>
       await this.log('information', message, fields: fields, tags: tags);
 
   /// When service is degraded, endangered, or may be behaving outside of its expected parameters, Warning level events are used.
   Future warning(String message,
-          {Map<String, dynamic> fields, Map<String, String> tags}) async =>
+          {Map<String, dynamic>? fields, Map<String, String>? tags}) async =>
       await this.log('warning', message, fields: fields, tags: tags);
 
   /// When functionality is unavailable or expectations broken, an Error event is used.
   Future error(String message, Object error, StackTrace stackTrace,
-          {Map<String, dynamic> fields, Map<String, String> tags}) async =>
+          {Map<String, dynamic>? fields, Map<String, String>? tags}) async =>
       await this.log('error', message,
           error: error, stackTrace: stackTrace, fields: fields, tags: tags);
 
   /// The most critical level, Fatal events demand immediate attention.
   Future fatal(String message,
-          {Map<String, dynamic> fields, Map<String, String> tags}) async =>
+          {Map<String, dynamic>? fields, Map<String, String>? tags}) async =>
       await this.log('fatal', message, fields: fields, tags: tags);
 }

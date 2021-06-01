@@ -7,9 +7,9 @@ import 'package:humio/dispatcher.dart';
 import 'package:humio/humio.dart';
 import 'package:humio/humio_dispatcher.dart';
 
-String _token;
+String? _token;
 String get token {
-  if (_token != null) return _token;
+  if (_token != null) return _token!;
 
   var filename = '.humio-ingest-token';
 
@@ -120,7 +120,7 @@ void main() {
 
     await sut.verbose('Testing the level', tags: {'tag': 'tagvalue'});
 
-    var decodedJson = jsonDecode(dispatcherStub.lastJson);
+    var decodedJson = jsonDecode(dispatcherStub.lastJson!);
     expect(decodedJson as List, isNotNull);
     expect((decodedJson as List).length, 1);
     expect(decodedJson[0], isNotNull);
@@ -131,7 +131,7 @@ void main() {
 }
 
 class DispatcherStub implements Dispatcher {
-  String lastJson;
+  String? lastJson;
 
   @override
   Future<bool> dispatch(String json) async {

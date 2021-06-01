@@ -14,9 +14,8 @@ class HumioDispatcher implements Dispatcher {
 
   @override
   Future<bool> dispatch(String json) async {
-    if (_ingestToken?.isEmpty ?? true)
-      throw 'Humio ingest token is not defined';
-    if (ingestUrl?.isEmpty ?? true) throw 'Humio ingest URL is not defined';
+    if (_ingestToken.isEmpty == true) throw 'Humio ingest token is not defined';
+    if (ingestUrl.isEmpty == true) throw 'Humio ingest URL is not defined';
 
     var dio = Dio();
 

@@ -65,10 +65,10 @@ class SimpleTestEnricher implements Enricher {
   Future<Map<String, dynamic>> enrich(
     String level,
     String message, {
-    Object error,
-    StackTrace stackTrace,
-    Map<String, dynamic> fields,
-    Map<String, String> tags,
+    Object? error,
+    StackTrace? stackTrace,
+    Map<String, dynamic>? fields,
+    Map<String, String>? tags,
   }) async =>
       {'private': 'true'};
 }
@@ -78,10 +78,10 @@ class SimpleTestTagEnricher implements TagEnricher {
   Future<Map<String, String>> enrich(
     String level,
     String message, {
-    Object error,
-    StackTrace stackTrace,
-    Map<String, dynamic> fields,
-    Map<String, String> tags,
+    Object? error,
+    StackTrace? stackTrace,
+    Map<String, dynamic>? fields,
+    Map<String, String>? tags,
   }) async =>
       {'appname': 'testapp'};
 }

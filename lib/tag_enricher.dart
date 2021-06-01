@@ -5,10 +5,10 @@ class TagEnricher implements Enricher {
   Future<Map<String, String>> enrich(
     String level,
     String message, {
-    Object error,
-    StackTrace stackTrace,
-    Map<String, dynamic> fields,
-    Map<String, String> tags,
+    Object? error,
+    StackTrace? stackTrace,
+    Map<String, dynamic>? fields,
+    Map<String, String>? tags,
   }) async {
     return {};
   }

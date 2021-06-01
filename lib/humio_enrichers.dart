@@ -4,38 +4,38 @@ import 'package:humio/tag_enricher.dart';
 import 'humio.dart';
 
 class HumioEnrichers implements Humio {
-  Humio base;
-  List<Enricher> _enrichers;
+  Humio? base;
+  List<Enricher>? _enrichers;
 
   HumioEnrichers(this.base) {
-    _enrichers = List<Enricher>();
+    _enrichers = [];
   }
 
   HumioEnrichers.defaultImplementation(
     String ingestToken, {
-    bool setRawMessage = false,
+    bool? setRawMessage = false,
   }) : this(Humio.defaultImplementation(
           ingestToken,
           setRawMessage: setRawMessage,
         ));
 
   void addEnricher(Enricher enricher) {
-    _enrichers.add(enricher);
+    _enrichers?.add(enricher);
   }
 
   @override
-  bool setRawMessage;
+  bool? setRawMessage;
 
   @override
   Future<bool> log(
     String level,
     String message, {
-    Object error,
-    StackTrace stackTrace,
-    Map<String, dynamic> fields,
-    Map<String, String> tags,
+    Object? error,
+    StackTrace? stackTrace,
+    Map<String, dynamic>? fields,
+    Map<String, String>? tags,
   }) async {
-    for (var enricher in _enrichers) {
+    for (var enricher in _enrichers!) {
       var enricherFields = await enricher.enrich(
         level,
         message,
@@ -57,7 +57,7 @@ class HumioEnrichers implements Humio {
         };
     }
 
-    return await base.log(
+    return await base!.log(
       level,
       message,
       error: error,
