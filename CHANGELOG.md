@@ -1,3 +1,7 @@
+## [0.1.1] - 2021-06-01
+
+* Dio dependency updated
+
 ## [0.1.0] - 2020-11-14
 
 * Fields moved to the root in Humio
