@@ -22,6 +22,11 @@ jobs:
       - script: $(FlutterToolPath)/flutter doctor -v
         displayName: Flutter Doctor
 
+      - task: DownloadSecureFile@1
+        name: .humio-ingest-token
+        inputs:
+          secureFile: .humio-ingest-token
+
       - script: $(FlutterToolPath)/flutter test
         displayName: Running tests
 
