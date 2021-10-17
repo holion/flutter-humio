@@ -13,6 +13,14 @@ jobs:
   - job: BuildAndPublish
     displayName: Build and publish package
     steps:
+      - task: hey24sheep.flutter.flutter-install.FlutterInstall@0
+        displayName: Installing flutter
+        inputs:
+          channel: $(flutterChannel)
+          version: $(flutterVersion)
+
+      - script: $(FlutterToolPath)/flutter doctor -v
+        displayName: Flutter Doctor
 
       - task: DownloadSecureFile@1
         displayName: Downloading secure file containing Humio ingest token
@@ -23,18 +31,9 @@ jobs:
       - script: cat $(humioIngestToken.secureFilePath) > .humio-ingest-token
         displayName: Writing secure file to file expected by tests
           
-      - task: hey24sheep.flutter.flutter-install.FlutterInstall@0
-        displayName: Installing flutter
-        inputs:
-          channel: $(flutterChannel)
-          version: $(flutterVersion)
-
-      - script: $(FlutterToolPath)/flutter doctor -v
-        displayName: Flutter Doctor
-
       - script: $(FlutterToolPath)/flutter test
         displayName: Running tests
 
-      # - script: $(FlutterToolPath)/flutter pub publish -f
-      #   displayName: Publishing package
-      #   workingDirectory: .
+      - script: $(FlutterToolPath)/flutter pub publish -f
+        displayName: Publishing package
+        workingDirectory: .
