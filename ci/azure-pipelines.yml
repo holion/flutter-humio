@@ -25,6 +25,6 @@ jobs:
       - script: $(FlutterToolPath)/flutter test
         displayName: Running tests
 
-      - script: $(FlutterToolPath)/flutter pub publish -f
-        displayName: Publishing package
-        workingDirectory: .
+      # - script: $(FlutterToolPath)/flutter pub publish -f
+      #   displayName: Publishing package
+      #   workingDirectory: .
