@@ -15,9 +15,13 @@ jobs:
     steps:
 
       - task: DownloadSecureFile@1
-        name: .humio-ingest-token
+        displayName: Downloading secure file containing Humio ingest token
+        name: humioIngestToken
         inputs:
           secureFile: .humio-ingest-token
+
+      - script: cat $(humioIngestToken.secureFilePath) > .humio-ingest-token
+        displayName: Writing secure file to file expected by tests
           
       - task: hey24sheep.flutter.flutter-install.FlutterInstall@0
         displayName: Installing flutter
@@ -27,11 +31,6 @@ jobs:
 
       - script: $(FlutterToolPath)/flutter doctor -v
         displayName: Flutter Doctor
-
-      - task: DownloadSecureFile@1
-        name: .humio-ingest-token
-        inputs:
-          secureFile: .humio-ingest-token
 
       - script: $(FlutterToolPath)/flutter test
         displayName: Running tests
