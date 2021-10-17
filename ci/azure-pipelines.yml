@@ -13,7 +13,7 @@ jobs:
   - job: BuildAndPublish
     displayName: Build and publish package
     steps:
-      - task: FlutterInstall@0
+      - task: hey24sheep.flutter.flutter-install.FlutterInstall@0
         displayName: Installing flutter
         inputs:
           channel: $(flutterChannel)
