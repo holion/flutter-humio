@@ -13,6 +13,12 @@ jobs:
   - job: BuildAndPublish
     displayName: Build and publish package
     steps:
+
+      - task: DownloadSecureFile@1
+        name: .humio-ingest-token
+        inputs:
+          secureFile: .humio-ingest-token
+          
       - task: hey24sheep.flutter.flutter-install.FlutterInstall@0
         displayName: Installing flutter
         inputs:
