@@ -1,4 +1,6 @@
-## [0.1.1] - 2021-06-01
+## [0.1.2] - 2021-10-17
+* Null safety errors corrected (don't use version 0.1.1)
+## [0.1.1] - 2021-06-01 - deprecated version
 
 * Dio dependency updated
 
