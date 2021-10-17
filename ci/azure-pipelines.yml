@@ -34,6 +34,6 @@ jobs:
         displayName: Running tests
 
       - script: $(FlutterToolPath)/flutter pub publish -f
-        condition: and(succeeded(), or(eq(variables['Build.SourceBranchName'], 'master'))
+        condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
         displayName: Publishing package
         workingDirectory: .
