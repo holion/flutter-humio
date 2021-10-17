@@ -1,6 +1,8 @@
 trigger:
   - master
-  - feature/test
+  - release/next
+  - develop
+  - feature/*
 
 variables:
   flutterChannel: stable
