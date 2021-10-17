@@ -12,7 +12,7 @@ class Humio {
   Dispatcher _dispatcher;
 
   /// Should the `message` property of all events be the `@rawmessage` in Humio?
-  bool? setRawMessage;
+  bool setRawMessage;
 
   /// Creates a new Humio logging instance
   Humio(
@@ -58,14 +58,14 @@ class Humio {
 
     if (fields == null) fields = {};
 
-    if (setRawMessage!) fields['message'] = message;
+    if (!setRawMessage) fields['message'] = message;
 
     if (error != null) fields['error'] = error;
     if (stackTrace != null) fields['stacktrace'] = stackTrace.toString();
 
     dynamic event = {
       'timestamp': DateTime.now().toUtc().toIso8601String(),
-      if (setRawMessage!) 'rawstring': message,
+      if (setRawMessage) 'rawstring': message,
       'attributes': fields
     };
 

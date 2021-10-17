@@ -6,7 +6,7 @@ class HumioStub implements Humio {
   late LogStatement lastLogStatement;
 
   @override
-  bool? setRawMessage;
+  bool setRawMessage = false;
 
   @override
   Future<bool> log(
@@ -17,7 +17,7 @@ class HumioStub implements Humio {
     Map<String, dynamic>? fields,
     Map<String, String>? tags,
   }) async {
-    lastLogStatement = LogStatement(level, message, fields!, tags!);
+    lastLogStatement = LogStatement(level, message, fields, tags);
 
     return true;
   }
