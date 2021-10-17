@@ -6,9 +6,6 @@ variables:
   flutterChannel: stable
   flutterVersion: latest
 
-# pool:
-#   name: default
-
 jobs:
   - job: BuildAndPublish
     displayName: Build and publish package
