@@ -4,6 +4,9 @@ trigger:
   - develop
   - feature/*
 
+pool:
+  vmImage: 'ubuntu-latest'
+
 variables:
   flutterChannel: stable
   flutterVersion: latest
