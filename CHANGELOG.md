@@ -1,18 +1,24 @@
+## [0.1.3] - 2023-03-20
+
+- Dio dependency updated
+
 ## [0.1.2] - 2021-10-17
-* Null safety errors corrected (don't use version 0.1.1)
+
+- Null safety errors corrected (don't use version 0.1.1)
+
 ## [0.1.1] - 2021-06-01 - deprecated version
 
-* Dio dependency updated
+- Dio dependency updated
 
 ## [0.1.0] - 2020-11-14
 
-* Fields moved to the root in Humio
+- Fields moved to the root in Humio
 
 ## [0.0.6] - 2020-05-02
 
-* Dispatcher consent introduced. Makes the acutal HTTP request to send data to Humio.
-* Bugs fixed:
-  * Level set correctly when tags are provided.
+- Dispatcher consent introduced. Makes the acutal HTTP request to send data to Humio.
+- Bugs fixed:
+  - Level set correctly when tags are provided.
 
 ## [0.0.5] - TagEnrichers added
 
@@ -22,11 +28,10 @@
 
 ## [0.0.2] - Extension methods made async
 
-* `Serverity` property renamed to `level`.
-* Default tag changed to `level`.
-* Example provided.
-
+- `Serverity` property renamed to `level`.
+- Default tag changed to `level`.
+- Example provided.
 
 ## [0.0.1] - Initial commit of working code
 
-* Working code which can log to Humio given a valid ingest token.
+- Working code which can log to Humio given a valid ingest token.
